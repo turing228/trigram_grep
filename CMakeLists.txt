@@ -8,5 +8,5 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 find_package(Qt5Widgets REQUIRED)
 
-add_executable(dirdemo main.cpp mainwindow.h mainwindow.cpp)
+add_executable(dirdemo main.cpp mainwindow.h mainwindow.cpp back/Trigram.cpp back/headers/Trigram.h back/IndexingWorker.cpp back/headers/IndexingWorker.h back/SearchingWorker.cpp back/headers/SearchingWorker.h)
 qt5_use_modules(dirdemo Widgets)

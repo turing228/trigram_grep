@@ -6,46 +6,225 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+       <width>910</width>
+       <height>610</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <property name="leftMargin">
-     <number>0</number>
-    </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
-     <number>0</number>
-    </property>
-    <item>
-     <widget class="QTreeWidget" name="treeWidget">
-      <attribute name="headerMinimumSectionSize">
-       <number>100</number>
-      </attribute>
-      <attribute name="headerStretchLastSection">
-       <bool>false</bool>
-      </attribute>
-      <column>
-       <property name="text">
-        <string>Filename</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Size</string>
-       </property>
-      </column>
-     </widget>
+      <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="0">
+              <layout class="QHBoxLayout" name="horizontalLayout_3">
+                  <item>
+                      <widget class="QLabel" name="label_find">
+                          <property name="sizePolicy">
+                              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                              </sizepolicy>
+                          </property>
+                          <property name="text">
+                              <string>Find:</string>
+                          </property>
+                      </widget>
+                  </item>
+                  <item>
+                      <widget class="QLineEdit" name="lineEdit_string">
+                          <property name="sizePolicy">
+                              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                              </sizepolicy>
+                          </property>
+                      </widget>
+                  </item>
+                  <item>
+                      <spacer name="horizontalSpacer">
+                          <property name="orientation">
+                              <enum>Qt::Horizontal</enum>
+                          </property>
+                          <property name="sizeHint" stdset="0">
+                              <size>
+                                  <width>40</width>
+                                  <height>20</height>
+                              </size>
+                          </property>
+                      </spacer>
+                  </item>
+              </layout>
+          </item>
+          <item row="1" column="0">
+              <widget class="QSplitter" name="splitter">
+                  <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                      </sizepolicy>
+                  </property>
+                  <property name="maximumSize">
+                      <size>
+                          <width>16777215</width>
+                          <height>16777215</height>
+                      </size>
+                  </property>
+                  <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                  </property>
+                  <widget class="QTreeWidget" name="treeWidget">
+                      <property name="sizePolicy">
+                          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                          </sizepolicy>
+                      </property>
+                      <attribute name="headerMinimumSectionSize">
+                          <number>100</number>
+                      </attribute>
+                      <attribute name="headerStretchLastSection">
+                          <bool>false</bool>
+                      </attribute>
+                      <column>
+                          <property name="text">
+                              <string>#</string>
+                          </property>
+                      </column>
+                      <column>
+                          <property name="text">
+                              <string>Filename</string>
+                          </property>
+                      </column>
+                      <column>
+                          <property name="text">
+                              <string>FilePath</string>
+                          </property>
+                      </column>
+                  </widget>
+                  <widget class="QWidget" name="">
+                      <layout class="QVBoxLayout" name="verticalLayout">
+                          <item>
+                              <layout class="QHBoxLayout" name="horizontalLayout_2">
+                                  <item>
+                                      <widget class="QLabel" name="label_matches">
+                                          <property name="text">
+                                              <string>Matches:</string>
+                                          </property>
+                                      </widget>
+                                  </item>
+                                  <item>
+                                      <widget class="QLabel" name="label_matches_count">
+                                          <property name="text">
+                                              <string>#Matches</string>
+                                          </property>
+                                      </widget>
+                                  </item>
+                                  <item>
+                                      <spacer name="horizontalSpacer_2">
+                                          <property name="orientation">
+                                              <enum>Qt::Horizontal</enum>
+                                          </property>
+                                          <property name="sizeHint" stdset="0">
+                                              <size>
+                                                  <width>40</width>
+                                                  <height>20</height>
+                                              </size>
+                                          </property>
+                                      </spacer>
+                                  </item>
+                              </layout>
+                          </item>
+                          <item>
+                              <widget class="QListWidget" name="listWidget">
+                                  <property name="sizePolicy">
+                                      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                                          <horstretch>0</horstretch>
+                                          <verstretch>0</verstretch>
+                                      </sizepolicy>
+                                  </property>
+                              </widget>
+                          </item>
+                      </layout>
+                  </widget>
+              </widget>
+          </item>
+          <item row="2" column="0">
+              <layout class="QGridLayout" name="gridLayout">
+                  <item row="2" column="1">
+                      <widget class="QProgressBar" name="progressBar_searching">
+                          <property name="value">
+                              <number>24</number>
+                          </property>
+                      </widget>
+                  </item>
+                  <item row="1" column="2">
+                      <widget class="QLabel" name="label_indexing_time">
+                          <property name="text">
+                              <string>indexing_time</string>
+                          </property>
+                      </widget>
+                  </item>
+                  <item row="1" column="1">
+                      <widget class="QProgressBar" name="progressBar_indexing">
+                          <property name="value">
+                              <number>24</number>
+                          </property>
+                      </widget>
+                  </item>
+                  <item row="2" column="0">
+                      <widget class="QLabel" name="label_searching">
+                          <property name="text">
+                              <string>Searching:</string>
+                          </property>
+                      </widget>
+                  </item>
+                  <item row="2" column="2">
+                      <widget class="QLabel" name="label_searching_time">
+                          <property name="text">
+                              <string>searching_time</string>
+                          </property>
+                      </widget>
+                  </item>
+                  <item row="0" column="2">
+                      <widget class="QLabel" name="label_time">
+                          <property name="text">
+                              <string>Time:</string>
+                          </property>
+                      </widget>
+                  </item>
+                  <item row="1" column="0">
+                      <widget class="QLabel" name="label_indexing">
+                          <property name="text">
+                              <string>Indexing:</string>
+                          </property>
+                      </widget>
+                  </item>
+                  <item row="0" column="1">
+                      <widget class="QLabel" name="label_progress">
+                          <property name="text">
+                              <string>Progress:</string>
+                          </property>
+                      </widget>
+                  </item>
+              </layout>
+          </item>
+          <item row="3" column="0">
+              <layout class="QHBoxLayout" name="horizontalLayout">
+                  <item>
+                      <widget class="QPushButton" name="pushButton_stop_indexing">
+                          <property name="text">
+                              <string>Stop indexing</string>
+                          </property>
+                      </widget>
+                  </item>
+                  <item>
+                      <widget class="QPushButton" name="pushButton_stop_searching">
+                          <property name="text">
+                              <string>Stop searching</string>
+                          </property>
+                      </widget>
+                  </item>
+              </layout>
     </item>
    </layout>
   </widget>
@@ -54,8 +233,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>27</height>
+        <width>910</width>
+        <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

@@ -25,10 +25,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+        back/IndexingWorker.cpp \
+        back/SearchingWorker.cpp \
+        back/Trigram.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+        back/headers/IndexingWorker.h \
+        back/headers/SearchingWorker.h \
+        back/headers/Trigram.h
 
 FORMS += \
         mainwindow.ui
