@@ -38,6 +38,8 @@ signals:
     void indexingFileEnded(int);
 
     void updateProgressIndexing(int);
+
+    void indexingStopped();
     //void running();
     //void stopped();
 

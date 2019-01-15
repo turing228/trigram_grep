@@ -25,6 +25,7 @@ IndexingWorker::IndexingWorker(QObject *parent) : QObject(parent), stopped(false
 void IndexingWorker::StopWork() {
     stopped = true;
     running = false;
+    emit indexingStopped();
 }
 
 void IndexingWorker::StartWork() {
@@ -46,7 +47,7 @@ void IndexingWorker::process() {
     size_t i = lastIndexingFile;
     if (i < trigram.file_vector.size()) {
         index_file(i);
-        emit updateProgressIndexing(lastIndexingFile);
+        emit updateProgressIndexing(i);
         lastIndexingFile++;
 
     } else {

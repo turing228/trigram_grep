@@ -50,7 +50,12 @@ public:
     explicit main_window(QWidget *parent = 0);
     ~main_window();
 
+    QTimer *tmr;
 private slots:
+
+    void updateTime();
+
+
     void select_directory();
 
     void index_directory(QString const &dir);
@@ -66,22 +71,38 @@ private slots:
 
     void search_string();
 
+    void show_file(QTreeWidgetItem *);
+
+
     void buttons_start();
 
     void buttons_indexing();
 
     void buttons_indexing_stopped();
 
-    void buttons_wait_search();
+    void buttons_indexing_ended();
 
     void buttons_searching();
 
     void buttons_searching_stopped();
 
+    void buttons_searching_ended();
+
+
 
     void pushButton_stop_indexing_clicked();
 
     void pushButton_stop_searching_clicked();
+
+
+    void pushButton_previous_clicked();
+
+    void pushButton_next_clicked();
+
+
+    void pushButton_open_path_clicked();
+
+    void pushButton_open_file_clicked();
 
 private:
     std::unique_ptr<Ui::MainWindow> ui;

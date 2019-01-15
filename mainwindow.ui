@@ -6,16 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-       <width>910</width>
-       <height>610</height>
+       <width>1303</width>
+       <height>676</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-      <layout class="QGridLayout" name="gridLayout_2">
-          <item row="0" column="0">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
               <layout class="QHBoxLayout" name="horizontalLayout_3">
                   <item>
                       <widget class="QLabel" name="label_find">
@@ -33,7 +33,7 @@
                   <item>
                       <widget class="QLineEdit" name="lineEdit_string">
                           <property name="sizePolicy">
-                              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                                   <horstretch>0</horstretch>
                                   <verstretch>0</verstretch>
                               </sizepolicy>
@@ -45,6 +45,9 @@
                           <property name="orientation">
                               <enum>Qt::Horizontal</enum>
                           </property>
+                          <property name="sizeType">
+                              <enum>QSizePolicy::Expanding</enum>
+                          </property>
                           <property name="sizeHint" stdset="0">
                               <size>
                                   <width>40</width>
@@ -55,19 +58,13 @@
                   </item>
               </layout>
           </item>
-          <item row="1" column="0">
+          <item>
               <widget class="QSplitter" name="splitter">
                   <property name="sizePolicy">
                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                       </sizepolicy>
-                  </property>
-                  <property name="maximumSize">
-                      <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                      </size>
                   </property>
                   <property name="orientation">
                       <enum>Qt::Horizontal</enum>
@@ -98,6 +95,11 @@
                       <column>
                           <property name="text">
                               <string>FilePath</string>
+                          </property>
+                      </column>
+                      <column>
+                          <property name="text">
+                              <string>pathtofile</string>
                           </property>
                       </column>
                   </widget>
@@ -132,23 +134,48 @@
                                           </property>
                                       </spacer>
                                   </item>
+                                  <item>
+                                      <widget class="QPushButton" name="pushButton_previous">
+                                          <property name="text">
+                                              <string>&lt;&lt;</string>
+                                          </property>
+                                      </widget>
+                                  </item>
+                                  <item>
+                                      <widget class="QPushButton" name="pushButton_next">
+                                          <property name="text">
+                                              <string>&gt;&gt;</string>
+                                          </property>
+                                      </widget>
+                                  </item>
                               </layout>
                           </item>
                           <item>
-                              <widget class="QListWidget" name="listWidget">
-                                  <property name="sizePolicy">
-                                      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                                          <horstretch>0</horstretch>
-                                          <verstretch>0</verstretch>
-                                      </sizepolicy>
-                                  </property>
-                              </widget>
+                              <widget class="QTextEdit" name="textEdit"/>
+                          </item>
+                          <item>
+                              <layout class="QHBoxLayout" name="horizontalLayout_4">
+                                  <item>
+                                      <widget class="QPushButton" name="pushButton_open_path">
+                                          <property name="text">
+                                              <string>Open path</string>
+                                          </property>
+                                      </widget>
+                                  </item>
+                                  <item>
+                                      <widget class="QPushButton" name="pushButton_open_file">
+                                          <property name="text">
+                                              <string>Open file</string>
+                                          </property>
+                                      </widget>
+                                  </item>
+                              </layout>
                           </item>
                       </layout>
                   </widget>
               </widget>
           </item>
-          <item row="2" column="0">
+          <item>
               <layout class="QGridLayout" name="gridLayout">
                   <item row="2" column="1">
                       <widget class="QProgressBar" name="progressBar_searching">
@@ -208,7 +235,7 @@
                   </item>
               </layout>
           </item>
-          <item row="3" column="0">
+          <item>
               <layout class="QHBoxLayout" name="horizontalLayout">
                   <item>
                       <widget class="QPushButton" name="pushButton_stop_indexing">
@@ -233,7 +260,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-        <width>910</width>
+        <width>1303</width>
         <height>25</height>
     </rect>
    </property>
