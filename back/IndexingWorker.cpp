@@ -75,28 +75,54 @@ void IndexingWorker::index_file(size_t file_number) {
     char buffer[3];
     int cur_size = 0;
     int count = 0;
+
+    QString temp;
+    QString *qline = &temp;
     while (!in.atEnd()) {
-        std::string line = in.readLine().toStdString();
-        int i = 0;
-        if (cur_size < 2) {
-            while (i < line.size() && cur_size < 2) {
-                buffer[1 + cur_size] = line.at(i);
+        if (in.readLineInto(qline)) {
+            std::string line = qline->toStdString();
+            int i = 0;
+            if (cur_size < 2) {
+                while (i < line.size() && cur_size < 2) {
+                    buffer[1 + cur_size] = line.at(i);
+                    i++;
+                    cur_size++;
+                }
+            }
+            while (i < line.size()) {
+                buffer[0] = buffer[1];
+                buffer[1] = buffer[2];
+                buffer[2] = line[i];
                 i++;
-                cur_size++;
+                uint32_t number = (buffer[0] << 16) + (buffer[1] << 8) + buffer[2];
+                file_trigrams.insert(number);
+                count++;
+                if (count > 200000) {
+                    return;     //TODO
+                }
             }
         }
-        while (i < line.size()) {
-            buffer[0] = buffer[1];
-            buffer[1] = buffer[2];
-            buffer[2] = line[i];
-            i++;
-            uint32_t number = (buffer[0] << 16) + (buffer[1] << 8) + buffer[2];
-            file_trigrams.insert(number);
-            count++;
-            if (count > 200000) {
-                return;     //TODO
-            }
-        }
+//        std::string line = in.readLine().toStdString();
+//        int i = 0;
+//        if (cur_size < 2) {
+//            while (i < line.size() && cur_size < 2) {
+//                buffer[1 + cur_size] = line.at(i);
+//                i++;
+//                cur_size++;
+//            }
+//        }
+//        while (i < line.size()) {
+//            buffer[0] = buffer[1];
+//            buffer[1] = buffer[2];
+//            buffer[2] = line[i];
+//            i++;
+//            uint32_t number = (buffer[0] << 16) + (buffer[1] << 8) + buffer[2];
+//            file_trigrams.insert(number);
+//            count++;
+//            if (count > 200000) {
+//                return;     //TODO
+//            }
+//        }
     }
 /*
     while (!file.atEnd()) {
