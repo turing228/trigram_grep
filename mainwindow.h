@@ -11,6 +11,7 @@
 #include <back/headers/IndexingWorker.h>
 #include <back/headers/SearchingWorker.h>
 #include <QtCore/QFileSystemWatcher>
+#include <QtCore/QDir>
 
 class TreeWidgetItem : public QTreeWidgetItem {
 public:
@@ -106,6 +107,10 @@ private slots:
     void pushButton_open_path_clicked();
 
     void pushButton_open_file_clicked();
+
+    void trigram_directory(QDir const &directory);
+
+    QFileInfoList listFiles(QDir const &directory);
 
 private:
     std::unique_ptr<Ui::MainWindow> ui;

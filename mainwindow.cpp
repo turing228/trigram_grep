@@ -14,6 +14,7 @@
 #include <QtWidgets/QLineEdit>
 #include <QtCore/QTextStream>
 #include <QtGui/QDesktopServices>
+#include <QtCore/QQueue>
 
 
 bool is_indexing = false;
@@ -99,9 +100,13 @@ main_window::~main_window() {
 
 QString cur_dir;
 
+QQueue<QString> watched_directories;
+
 void main_window::select_directory() {
-    if (!cur_dir.isEmpty()) {
-        watcher.removePath(cur_dir);
+    while (!watched_directories.isEmpty()) {
+        auto t = watched_directories.front();
+        watched_directories.pop_back();
+        watcher.removePath(t);
     }
 
     QString dir = QFileDialog::getExistingDirectory(this, "Select Directory for Indexing",
@@ -110,9 +115,6 @@ void main_window::select_directory() {
 
     cur_dir = dir;
 
-    watcher.addPath(dir);
-    connect(&watcher, &QFileSystemWatcher::fileChanged, this, &main_window::index_again);
-    connect(&watcher, &QFileSystemWatcher::directoryChanged, this, &main_window::index_again);
 
     index_directory(dir);
 }
@@ -133,7 +135,9 @@ void main_window::index_directory(QString const &dir) {
     indexing_time = 0;
     searching_time = 0;
 
-    trigram = Trigram(d);
+    trigram = Trigram();
+    trigram_directory(d);
+    //trigram = Trigram(d);
 
     threadIndexing = new QThread;
     indexingWorker = new IndexingWorker;
@@ -579,3 +583,35 @@ void main_window::pushButton_open_file_clicked() {
         QDesktopServices::openUrl(QUrl::fromLocalFile(selected));
 }
 
+void main_window::trigram_directory(QDir const &directory) {
+    trigram.file_list = trigram.listFiles(directory);
+
+    for (auto i : trigram.file_list) {
+        trigram.file_vector.push_back(i);
+    }
+}
+
+QFileInfoList main_window::listFiles(QDir const &directory) {
+    QDir dir(directory);
+
+    QFileInfoList list = dir.entryInfoList(
+            QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden); //| QDir::NoDotAndDotDot
+    QFileInfoList result;
+
+    for (QFileInfo file_info : list) {
+        if (!file_info.isSymLink() && file_info.isDir()) {
+            result.append(listFiles(file_info.absoluteFilePath()));
+            watched_directories.push_back(file_info.absoluteFilePath());
+            watcher.addPath(file_info.absoluteFilePath());
+            connect(&watcher, &QFileSystemWatcher::fileChanged, this, &main_window::index_again);
+            connect(&watcher, &QFileSystemWatcher::directoryChanged, this, &main_window::index_again);
+        } else {
+            if (file_info.isSymLink()) {
+                file_info = file_info.symLinkTarget();
+            }
+            result.push_back(file_info);
+        }
+    }
+
+    return result;
+}

@@ -11,11 +11,11 @@ Trigram trigram;
 std::mutex mtx;
 
 Trigram::Trigram(QDir const &directory) {
-    file_list = listFiles(directory);
+    //file_list = listFiles(directory);
 
-    for (auto i : file_list) {
-        file_vector.push_back(i);
-    }
+    //for (auto i : file_list) {
+    //    file_vector.push_back(i);
+    //}
 }
 
 QFileInfoList Trigram::listFiles(QDir const &directory) {

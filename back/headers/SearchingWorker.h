@@ -25,7 +25,7 @@ public:
     bool isNew = true;
     bool Stop = false;
 
-    QString const &searched_string = "";
+    QString searched_string = "";
 
 public slots:
 

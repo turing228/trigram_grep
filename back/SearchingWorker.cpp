@@ -11,6 +11,9 @@
 #include <fstream>
 #include <QtCore/QSet>
 #include <QtCore/QMap>
+#include <QtCore/QTextStream>
+#include <algorithm>
+#include <functional>
 
 size_t lastSearchingFile;
 
@@ -97,5 +100,28 @@ void SearchingWorker::search_file(QString const &file_path) {
         }
     }
 
-    emit searchInFileEnded(trigram.push(file_path));
+    QFile file(file_path);
+
+    if (!file.open(QIODevice::ReadOnly)) {
+        return;     //TODO
+    }
+
+    QTextStream in(&file);
+
+    QString temp;
+    QString *qline = &temp;
+
+    bool is_ok = false;
+    while (!in.atEnd()) {
+        if (in.readLineInto(qline, 100)) {
+            std::string line = qline->toStdString();
+            if (line.find(searched_string.toStdString()) < line.length()) {
+                is_ok = true;
+                break;
+            }
+        }
+    }
+
+    if (is_ok)
+            emit searchInFileEnded(trigram.push(file_path));
 }
