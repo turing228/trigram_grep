@@ -10,6 +10,7 @@
 #include <QtWidgets/QTreeWidgetItem>
 #include <back/headers/IndexingWorker.h>
 #include <back/headers/SearchingWorker.h>
+#include <QtCore/QFileSystemWatcher>
 
 class TreeWidgetItem : public QTreeWidgetItem {
 public:
@@ -52,6 +53,8 @@ public:
 
     QTimer *tmr;
 private slots:
+
+    void index_again();
 
     void updateTime();
 
@@ -113,6 +116,7 @@ private:
     QThread *threadSearching;
     SearchingWorker *searchingWorker;
 
+    QFileSystemWatcher watcher;
 
 signals:
 

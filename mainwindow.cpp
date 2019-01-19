@@ -97,12 +97,29 @@ main_window::~main_window() {
     }
 }
 
+QString cur_dir;
+
 void main_window::select_directory() {
+
+    if (!cur_dir.isEmpty()) {
+        watcher.removePath(cur_dir);
+    }
+
     QString dir = QFileDialog::getExistingDirectory(this, "Select Directory for Indexing",
                                                     QString(),
                                                     QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 
+    cur_dir = dir;
+
+    watcher.addPath(dir);
+    connect(&watcher, &QFileSystemWatcher::fileChanged, this, &main_window::index_again);
+    connect(&watcher, &QFileSystemWatcher::directoryChanged, this, &main_window::index_again);
+
     index_directory(dir);
+}
+
+void main_window::index_again() {
+    index_directory(cur_dir);
 }
 
 void main_window::index_directory(QString const &dir) {
