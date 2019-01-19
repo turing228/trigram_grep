@@ -52,6 +52,7 @@ void IndexingWorker::process() {
 
     } else {
         //emit clusterEnded(-1);
+        emit finished_fully();
         StopWork();
         emit finished();
     }
@@ -79,7 +80,7 @@ void IndexingWorker::index_file(size_t file_number) {
     QString temp;
     QString *qline = &temp;
     while (!in.atEnd()) {
-        if (in.readLineInto(qline)) {
+        if (in.readLineInto(qline, 100)) {
             std::string line = qline->toStdString();
             int i = 0;
             if (cur_size < 2) {

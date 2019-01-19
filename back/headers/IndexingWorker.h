@@ -40,6 +40,8 @@ signals:
     void updateProgressIndexing(int);
 
     void indexingStopped();
+
+    void finished_fully();
     //void running();
     //void stopped();
 

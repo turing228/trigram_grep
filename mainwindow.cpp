@@ -100,7 +100,6 @@ main_window::~main_window() {
 QString cur_dir;
 
 void main_window::select_directory() {
-
     if (!cur_dir.isEmpty()) {
         watcher.removePath(cur_dir);
     }
@@ -123,6 +122,9 @@ void main_window::index_again() {
 }
 
 void main_window::index_directory(QString const &dir) {
+
+    buttons_indexing();
+
     ui->treeWidget->clear();
     ui->textEdit->clear();
     setWindowTitle(QString("Directory Content - %1").arg(dir));
@@ -150,8 +152,9 @@ void main_window::index_directory(QString const &dir) {
     // Connect worker finished signal to trigger threadIndexing quit, then delete.
     connect(indexingWorker, SIGNAL(finished()), threadIndexing, SLOT(quit()), Qt::DirectConnection);
     connect(indexingWorker, SIGNAL(finished()), indexingWorker, SLOT(deleteLater()), Qt::DirectConnection);
-    //connect(ui->actionScan_Directory, SIGNAL(clicked()), threadIndexing, SLOT(quit()), Qt::DirectConnection);
-    //connect(ui->actionScan_Directory, SIGNAL(clicked()), indexingWorker, SLOT(deleteLater()), Qt::DirectConnection);
+
+    connect(ui->actionScan_Directory, &QAction::triggered, threadIndexing, &QThread::quit);
+    connect(ui->actionScan_Directory, &QAction::triggered, indexingWorker, &QThread::deleteLater);
 
     // Connect worker to runstop-button
     connect(this, SIGNAL(startIndexingWork()), indexingWorker, SLOT(StartWork()));
@@ -161,7 +164,7 @@ void main_window::index_directory(QString const &dir) {
 
     // Make sure the threadIndexing object is deleted after execution has finished.
     connect(threadIndexing, SIGNAL(finished()), threadIndexing, SLOT(deleteLater()), Qt::DirectConnection);
-    connect(threadIndexing, SIGNAL(finished()), this, SLOT(buttons_indexing_ended()), Qt::DirectConnection);
+    connect(indexingWorker, SIGNAL(finished_fully()), this, SLOT(buttons_indexing_ended()), Qt::DirectConnection);
 
     threadIndexing->start();
 
@@ -457,7 +460,7 @@ void main_window::buttons_searching() {
 //    ui->pushButton_stop_indexing->setDisabled(true);
 
     ui->pushButton_stop_searching->setText("Stop searching");
-    ui->pushButton_stop_searching->setDisabled(false);
+    ui->pushButton_stop_searching->setDisabled(true);
 
     ui->pushButton_previous->setDisabled(true);
     ui->pushButton_next->setDisabled(true);
@@ -476,7 +479,7 @@ void main_window::buttons_searching_stopped() {
 //    ui->pushButton_stop_indexing->setDisabled(true);
 
     ui->pushButton_stop_searching->setText("Run searching");
-    ui->pushButton_stop_searching->setDisabled(false);
+    ui->pushButton_stop_searching->setDisabled(true);
 
     ui->pushButton_previous->setDisabled(true);
     ui->pushButton_next->setDisabled(true);
@@ -575,3 +578,4 @@ void main_window::pushButton_open_file_clicked() {
     if (!selected.isEmpty())
         QDesktopServices::openUrl(QUrl::fromLocalFile(selected));
 }
+
