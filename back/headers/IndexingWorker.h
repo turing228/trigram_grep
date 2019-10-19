@@ -2,8 +2,8 @@
 // Created by jesus on 12.01.19.
 //
 
-#ifndef DIRDEMO_INDEXINGWORKER_H
-#define DIRDEMO_INDEXINGWORKER_H
+#ifndef TRIGRAM_GREP_INDEXINGWORKER_H
+#define TRIGRAM_GREP_INDEXINGWORKER_H
 
 
 #include <QThread>
@@ -14,7 +14,7 @@
 class IndexingWorker : public QObject {
 Q_OBJECT
 public:
-    explicit IndexingWorker(QObject *parent = 0);
+    explicit IndexingWorker(QObject *parent = nullptr);
     //ClusterWorker();
 
     //virtual ~ClusterWorker();
@@ -56,4 +56,4 @@ private:
 extern int cur_id;
 
 
-#endif //DIRDEMO_INDEXINGWORKER_H
+#endif //TRIGRAM_GREP_INDEXINGWORKER_H

@@ -2,8 +2,8 @@
 // Created by jesus on 12.01.19.
 //
 
-#ifndef DIRDEMO_SEARCHINGWORKER_H
-#define DIRDEMO_SEARCHINGWORKER_H
+#ifndef TRIGRAM_GREP_SEARCHINGWORKER_H
+#define TRIGRAM_GREP_SEARCHINGWORKER_H
 
 
 #include "back/headers/SearchingWorker.h"
@@ -16,7 +16,7 @@
 class SearchingWorker : public QObject {
 Q_OBJECT
 public:
-    explicit SearchingWorker(QObject *parent = 0);
+    explicit SearchingWorker(QObject *parent = nullptr);
 
     explicit SearchingWorker(QString const &);
     //ClusterWorker();
@@ -63,4 +63,4 @@ private:
 //extern int cur_id;
 
 
-#endif //DIRDEMO_SEARCHINGWORKER_H
+#endif //TRIGRAM_GREP_SEARCHINGWORKER_H

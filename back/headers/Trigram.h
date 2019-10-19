@@ -2,8 +2,8 @@
 // Created by jesus on 12.01.19.
 //
 
-#ifndef DIRDEMO_TRIGRAM_H
-#define DIRDEMO_TRIGRAM_H
+#ifndef TRIGRAM_GREP_TRIGRAM_H
+#define TRIGRAM_GREP_TRIGRAM_H
 
 
 #include <QtCore/QString>
@@ -22,9 +22,9 @@ public:
 
     std::vector<QString> files_with_string;
 
-    Trigram() {}
+    Trigram() = default;
 
-    Trigram(QDir const &directory);
+    explicit Trigram(QDir const &directory);
 
     QFileInfoList listFiles(QDir const &directory);
 
@@ -39,4 +39,4 @@ extern Trigram trigram;
 extern std::mutex mtx;
 
 
-#endif //DIRDEMO_TRIGRAM_H
+#endif //TRIGRAM_GREP_TRIGRAM_H
