@@ -16,7 +16,7 @@ Trigram Grep Finder
     <img src="https://img.shields.io/github/stars/turing228/trigram_grep?style=social" title="Stars"/>
 </p>
 
-Trigram Grep Finderis the application of the future that allows you to find fastly a *string* in files and manually check all found matches!
+Trigram Grep Finder is the application of the future that allows you to find fastly a *string* in files and manually check all found matches!
 
 ## Contents
 
@@ -34,22 +34,28 @@ Trigram Grep Finderis the application of the future that allows you to find fast
 <img src="/examples/Initial%20screen.png" width="500" title="Initial screen">
 
 2. Now click "choose". The application will start indexing. In the future you will find *strings* in files of this directory
-<img src="/examples/Select%20Directory%20for%20Indexing.png" width="500" title="Select a directory for indexing">
+<img src="/examples/Select%20a%20Directory%20for%20the%20indexing.png" width="500" title="Select a Directory for the indexing">
 
 3. You can see the progress bars and timings at the bottom of the application.
 <img src="/examples/Indexing.png" width="500" title="Indexing">
 
 4. If you want, you can stop the indexing for a while and start a searching. Just click on the button "stop".
-<img src="/examples/Stop%20indexing.png" width="800" title="Stop mode">
+<img src="/examples/Stop%20the%20indexing.png" width="500" title="Stop mode">
 
-5. After the indexing is over or you've clicked "stop" you can search strings. You the special input field in the upper part of the application
-<img src="/examples/Search.png" width="800" title="Search">
+5. After the indexing is over or you've clicked "stop" you can search strings. Use the special input field in the upper part of the application
+<img src="/examples/Search%20the%20string.png" width="800" title="Stop mode">
 
 6. If you've typed the search string, at the left side you see all files with it. Choose one and click on it! At the right side - the content of the choosen file. Amazing!
-<img src="/examples/Search.png" width="800" title="Search">
+<img src="/examples/See%20the%20file%20with%20the%20search%20string.png" width="800" title="See the file with the search string">
 
-6. You can see at the upper right side of the application number of matches with the search string, number of the current selected match and navigation on matches buttons. Use the last to get the best experience!
-<img src="/examples/Search.png" width="800" title="Search">
+7. You can see at the upper right side of the application number of matches with the search string, number of the current selected match and navigation on matches buttons. Use the last to get the best experience!
+<img src="/examples/Go%20to%20the%20next%20match.png" width="800" title="Go to the next match">
+
+7. Also you can open the file or the path where it is just by special buttons at the bottom of the application!
+<p>
+<img src="/examples/Open%20the%20file.png" width="400" title="Open the file">
+<img src="/examples/Open%20the%20path.png" width="400" title="Open the path">
+</p>
 
 ## 🚀 Quickstart
 
@@ -73,8 +79,9 @@ To run it just write in your terminal:
 
 ## 📋 Used tecnhologies
 
-- QT framework - for UI application and multi-threading
+- QT framework - for UI and multithreading
 - C++ - as the language for the backend development
+- Mutexes - for the multithreading correctness
 
 ## 🎉 Idea of the solution
 
@@ -89,13 +96,14 @@ Ok, that is very easy to describe:
 ### Code of the application:
  - `main.cpp` - file with function `main`
  - `mainwindow.h`, `mainwindow.cpp` - the code of the main application
- - `clustering.cpp`, `clustering.h` - for the first step in our idea
- - `clusterWorker.cpp`, `clusterWorker.h` - for the second step. It starts in an extra thread by `mainwindow.cpp` to don't disturb UI-thread
+ - `IndexingWorker.cpp`, `IndexingWorker.h` - for the first step in our idea. Starts in a new QT-thread
+ - `SearchingWorker.cpp`, `SearchingWorker.h` - for the third step. It starts in an extra thread by `mainwindow.cpp`. Starts in a new QT-thread
+ - `Trigram.cpp`, `Trigram.h` - helper class for working with file lists (e.g. to remember what trigrams are there)
  
 ### Also:
  - `mainwindow.ui` — XML-file with the description of the main window. Utility `uic` uses it for the building of the file `ui-mainwindow.h`, which includes to `mainwindow.cpp`. `ui`-files can be opened by QT Designer or QT Creator.
  - `CMakeLists.txt` — `cmake`'s build-script.
- - `extra_files_finder.pro` — `qmake`'s build-script.
+ - `trigram_grep.pro` — `qmake`'s build-script.
  
  ## 👪 Contributors
 
