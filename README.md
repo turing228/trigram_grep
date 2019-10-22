@@ -25,6 +25,8 @@ Trigram Grep Finder is the application of the future that allows you to find fas
 - [Used tecnhologies](#-used-tecnhologies)
 - [Idea of the solution](#-idea-of-the-solution)
 - [Files description](#-files-description)
+- [Benchmarks](#-benchmarks)
+- [Personal impression](#-personal-impression)
 - [Contributors](#-contributors)
 - [License](#-license)
 
@@ -87,9 +89,9 @@ To run it just write in your terminal:
 
 Ok, that is very easy to describe:
 
-1. Firstly, we index the selected directory by the method "trigram grep". That means we remember in `QSet<quint32> file_trigrams` all trigrams inside each file (trigram is a sequence of exactly 3 letters) (yes, we represent trigrams as `quint32`, for more details [check the code](https://github.com/turing228/trigram_grep/blob/ccdceabcc5352e7979c014e28272ce7a847a6cd9/back/IndexingWorker.cpp#L93))
-2. Secondly, to fastly find the search string, [we memorize trigrams of the search string](https://github.com/turing228/trigram_grep/blob/ccdceabcc5352e7979c014e28272ce7a847a6cd9/back/SearchingWorker.cpp#L75)
-3. Finally, we fastly check every file [does it contain the search trigrams](https://github.com/turing228/trigram_grep/blob/ccdceabcc5352e7979c014e28272ce7a847a6cd9/back/SearchingWorker.cpp#L96) and then manually check [does it actually contain the whole search string](https://github.com/turing228/trigram_grep/blob/ccdceabcc5352e7979c014e28272ce7a847a6cd9/back/SearchingWorker.cpp#L115)
+1. Firstly, we index the selected directory by the method "trigram grep" ([described by Google's developers][trigram index]). That means we remember in `QSet<quint32> file_trigrams` all trigrams inside each file (trigram is a sequence of exactly 3 letters) (yes, we represent trigrams as `quint32`, for more details [check the code][how do we use quint32])
+2. Secondly, to fastly find the search string, [we memorize trigrams of the search string][trigrams' memorizing]
+3. Finally, we fastly check every file [does it contain the search trigrams][checking trigrams in files] and then manually check [does it actually contain the whole search string][exact checking]
 
 ## 📂 Files description
 
@@ -104,6 +106,20 @@ Ok, that is very easy to describe:
  - `mainwindow.ui` — XML-file with the description of the main window. Utility `uic` uses it for the building of the file `ui-mainwindow.h`, which includes to `mainwindow.cpp`. `ui`-files can be opened by QT Designer or QT Creator.
  - `CMakeLists.txt` — `cmake`'s build-script.
  - `trigram_grep.pro` — `qmake`'s build-script.
+ 
+ ## 🏄 Benchmarks
+ 
+[Indexing by trigrams][trigram index] is as fast as reading from a hard drive, so it depends on what you have - HDD or SSD (100-500 MB/s). To solve the problem of finding string in files obviously you must at least once read all data where your string can be, so it's sensational result what our indexing function doesn't decreases at all the maximum possible speed!
+
+On other hand, application finishes searching after 0.5-1s depending on the directory's size. It's almost the same speed as you type symbols in search string field!
+
+Amazing, is not it?
+
+ ## 💣 Personal impression
+
+QT is very cool framework! It allowed to me easily create a beautigul and convenient UI with wide functionality & implemented multithreading. But "easily", because at some point I finally figured out everything! This is an incredibly exciting experience of learning new technologies 📚, googling 🔍, overcoming 🧗 framework's limitations, testing 🌶️ and immediately viewing 👀 the result 💥🔥🎆 !!!
+
+Thanks a lot to sunny white Saint Petersburg nights 🌙, deadlines ☠️, Google 🤝 and friends 💞. You are breathtaking 💋 !!! You all helped me a lot to develop this amazing application!!!!
  
  ## 👪 Contributors
 
@@ -132,62 +148,8 @@ Ok, that is very easy to describe:
 Extra Files Finder is MIT licensed, as found in the [LICENSE][l] file.
 
 [l]: https://github.com/turing228/trigram_grep/blob/master/LICENSE
-
-
-
-
-trigram_grep — Графическое приложение QT для поиска строки в файлах
--------------------------------------------------------
-
-### Описание файлов
-
-Исходный код расположен в файлах
- - `main.cpp`— файл с функцией `main`
- - `mainwindow.h`, `mainwindow.cpp` — код главного окна приложения
- 
- Кроме исходного кода есть
- - `mainwindow.ui` — XML-файл с описанием главного окна. В процессе сборки на его основе утилитой `uic` будет сгенерён файл `ui_mainwindow.h`, который включается в `mainwindow.cpp`. `ui`-файлы можно открыть Qt Designer'ом. Qt Creator имеет Qt Designer встроенный в себя и тоже умеет открывать `ui`-файлы.
- - `CMakeLists.txt` — билд-скрипт для `cmake`.  Не используется при билде `qmake`'ом.
- - `trigram_grep.pro` — файл-проект для `qmake`. Не используется при билде `cmake`'ом.
-
-### Сборка `cmake`'ом
-
-    $ cmake -DCMAKE_BUILD_TYPE=Debug .
-    $ make
-
-Вместо `-DCMAKE_BUILD_TYPE=Debug` может быть `-DCMAKE_BUILD_TYPE=RelWithDebInfo` или что-то другое в зависимости от того, какую конфигурацию вы желаете.
-
-### Сборка qmake'ом
-
-    $ qmake CONFIG+=debug -o Makefile trigram_grep.pro
-    $ make
-
--------------------------------------------------------
-Этот проект мой самый технически сложный и объемный в программировании, но в то же время и самый интересный.
-
-#### Что сделал?
-Я реализовал на C++ многопоточную программу с графической оболочкой QT с кучей кнопок (например, остановки поиска), выбором директорий и удобным выводом результата. Удобным, то есть с возможностью по нажатию на файл из списка увидеть тут же его содержимое, а затем, нажимая по кнопкам, переходить по совпадениям в нем.
-
-Основано решение на докладе команды из Google, а именно - поиске по триграммам (триграмма - подстрока из 3 подряд символов). Оказывается, если в файле содержатся все триграммы искомой строки, то почти наверняка содержится и сама строка. Поэтому мы сначала молниеносно сканируем директорию, находя триграммы в файлах и запоминая какие где, а затем, когда нам поступает запрос на поиск строки, ищем по ее триграммам. Затем проверяем, что эта строка действительно есть в файле, а не просто ее триграммы.
-
-#### Результат
-##### Бенчмарки
-Результаты впечатляют. Индексация происходит почти со скоростью чтения с диска и зависит от железа – HDD или SSD, то есть 100-500 мб/c. А заканчивает искать строчку через 0,5-5 секунд после начала в зависимости от размера директории, то есть почти со скоростью ввода букв в строку поиска.
-##### Дополнительно
-В качестве дополнительного функционала я реализовал многопоточность для независимой работы потоков графического интерфейса, индексации, поиска. Пользователь может смотреть файлы, пока происходит поиск строки. Может и остановить в любой момент выполняемый процесс по нажатию на кнопку или просто отмасштабировать окно приложения. В любом случае **графический интерфейс не лагает**. Так же я настроил обновление индексации в случае изменения файлов. 
-
-##### 
-Что из себя представляет графический интерфейс на движке QT? Сверху выбор директории, под ней поле для ввода искомой строки. В левой половине список файлов с искомой строкой, по нажатию на один из них он выводится на правой половине. По выведенному файлу можно перемещаться по совпадениям, нажимая на кнопки. Так же снизу прогресс-бар выполнения этапов работы, время их выполнения.
-
-
-#### С чем стокнулся
-QT обалденный фреймворк. Я в итоге легко как создал красивый и удобный графический интерфейс с широким функционалом, так и реализовал многопоточность. Но легко потому, что я в какой-то момент наконец разобрался во всем) 
-
-Простые штуки действительно просто делать, но, если что-то хоть немного сложное и нетривиальное, то сталкиваешься с ограничениями QT (я иногда натыкался на неожиданное отсутствие нужных мемберов в классах), а в интернете часто примеры это именно что примеры - они написаны без мысли, что ты собираешься использовать их код совместно с другим кодом.
-
-Самым сложным было понять *как правильно организовать несколько крупных потоков*, которые ты то выключаешь, то включаешь, хотя казалось бы – это лишь немного сложнее «линейных» графических приложений. 
-
-Но знакомые, гугл, дедлайны и несколько бессонных ночей сделали свое дело) и я стал специалистом по QT фреймворку, создав отличнейшее приложение.
-
-#### В итоге
-Разбираться в новой технологии, гуглить, мучиться, обходить ограничения, тестировать и видеть тут же результат было безумно интересно. Я рад, что у меня получилось выполнить этот проект и я им горжусь.
+[trigram index]: https://swtch.com/~rsc/regexp/regexp4.html
+[how do we use quint32]: https://github.com/turing228/trigram_grep/blob/ccdceabcc5352e7979c014e28272ce7a847a6cd9/back/IndexingWorker.cpp#L93
+[trigrams' memorizing]: https://github.com/turing228/trigram_grep/blob/ccdceabcc5352e7979c014e28272ce7a847a6cd9/back/SearchingWorker.cpp#L75
+[checking trigrams in files]: https://github.com/turing228/trigram_grep/blob/ccdceabcc5352e7979c014e28272ce7a847a6cd9/back/SearchingWorker.cpp#L96
+[exact checking]: https://github.com/turing228/trigram_grep/blob/ccdceabcc5352e7979c014e28272ce7a847a6cd9/back/SearchingWorker.cpp#L115
