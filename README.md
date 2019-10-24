@@ -41,16 +41,16 @@ Trigram Grep Finder is the application of the future that allows you to find fas
 3. You can see the progress bars and timings at the bottom of the application.
 <img src="/examples/Indexing.png" width="500" title="Indexing">
 
-4. If you want, you can stop the indexing for a while and start a searching. Just click on the button "stop".
+4. If you want, you can stop the indexing for a while and start searching. Just click on the button "stop".
 <img src="/examples/Stop%20the%20indexing.png" width="500" title="Stop mode">
 
 5. After the indexing is over or you've clicked "stop" you can search strings. Use the special input field in the upper part of the application
 <img src="/examples/Search%20the%20string.png" width="800" title="Stop mode">
 
-6. If you've typed the search string, at the left side you see all files with it. Choose one and click on it! At the right side - the content of the choosen file. Amazing!
+6. If you've typed the search string, on the left side you see all files with it. Choose one and click on it! On the right side - the content of the chosen file. Amazing!
 <img src="/examples/See%20the%20file%20with%20the%20search%20string.png" width="800" title="See the file with the search string">
 
-7. You can see at the upper right side of the application number of matches with the search string, number of the current selected match and navigation on matches buttons. Use the last to get the best experience!
+7. You can see at the upper right side of the application number of matches with the search string, the number of the currently selected match and navigation on matches buttons. Use the last to get the best experience!
 <img src="/examples/Go%20to%20the%20next%20match.png" width="800" title="Go to the next match">
 
 7. Also you can open the file or the path where it is just by special buttons at the bottom of the application!
@@ -79,7 +79,7 @@ To run it just write in your terminal:
 
     $ ./trigram_grep
 
-## 📋 Used tecnhologies
+## 📋 Used technologies
 
 - QT framework - for UI and multithreading
 - C++ - as the language for the backend development
@@ -91,7 +91,7 @@ Ok, that is very easy to describe:
 
 1. Firstly, we index the selected directory by the method "trigram grep" ([described by Google's developers][trigram index]). That means we remember in `QSet<quint32> file_trigrams` all trigrams inside each file (trigram is a sequence of exactly 3 letters) (yes, we represent trigrams as `quint32`, for more details [check the code][how do we use quint32])
 2. Secondly, to fastly find the search string, [we memorize trigrams of the search string][trigrams' memorizing]
-3. Finally, we fastly check every file [does it contain the search trigrams][checking trigrams in files] and then manually check [does it actually contain the whole search string][exact checking]
+3. Finally, we fastly check every file [does it contain the search trigrams][checking trigrams in files] and then manually check [does it contain the whole search string][exact checking]
 
 ## 📂 Files description
 
@@ -109,15 +109,15 @@ Ok, that is very easy to describe:
  
  ## 🏄 Benchmarks
  
-[Indexing by trigrams][trigram index] is as fast as reading from a hard drive, so it depends on what you have - HDD or SSD (100-500 MB/s). To solve the problem of finding string in files obviously you must at least once read all data where your string can be, so it's sensational result what our indexing function doesn't decreases at all the maximum possible speed!
+[Indexing by trigrams][trigram index] is as fast as reading from a hard drive, so it depends on what you have - HDD or SSD (100-500 MB/s). To solve the problem of finding string in files you must at least once read all data where your string can be, so it's the sensational result that our indexing function doesn't decrease at all the maximum possible speed!
 
-On other hand, application finishes searching after 0.5-1s depending on the directory's size. It's almost the same speed as you type symbols in search string field!
+On the other hand, the application finishes searching after 0.5-1s depending on the directory's size. It's almost the same speed as you type symbols in the search string field!
 
 Amazing, is not it?
 
  ## 💣 Personal impression
 
-QT is very cool framework! It allowed to me easily create a beautigul and convenient UI with wide functionality & implemented multithreading. But "easily", because at some point I finally figured out everything! This is an incredibly exciting experience of learning new technologies 📚, googling 🔍, overcoming 🧗 framework's limitations, testing 🌶️ and immediately viewing 👀 the result 💥🔥🎆 !!!
+QT is a very cool framework! It allowed to me easily create a beautiful and convenient UI with wide functionality & implemented multithreading. But "easily", because at some point, I finally figured out everything! This is an incredibly exciting experience of learning new technologies 📚, googling 🔍, overcoming 🧗 the framework's limitations, testing 🌶️ and immediately viewing 👀 the result 💥🔥🎆 !!!
 
 Thanks a lot to sunny white Saint Petersburg nights 🌙, deadlines ☠️, Google 🤝 and friends 💞. You are breathtaking 💋 !!! You all helped me a lot to develop this amazing application!!!!
  
